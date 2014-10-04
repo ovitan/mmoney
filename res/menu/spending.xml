@@ -1,0 +1,42 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="money.com.SpendingActivity" >
+
+    <item
+        android:id="@+id/cmdCollection"
+        android:icon="@drawable/collection"
+        android:orderInCategory="100"
+        android:showAsAction="ifRoom"
+        android:title="@string/itemSpending"/>
+    <item
+        android:id="@+id/cmdHistory"
+        android:icon="@drawable/history"
+        android:orderInCategory="100"
+        android:showAsAction="ifRoom"
+        android:title="@string/itemHistory"/>
+    <item
+        android:id="@+id/cmdReport"
+        android:icon="@drawable/report"
+        android:orderInCategory="100"
+        android:showAsAction="ifRoom"
+        android:title="@string/itemReport"/>
+    <item
+        android:id="@+id/cmdAccount"
+        android:icon="@drawable/account"
+        android:orderInCategory="100"
+        android:showAsAction="ifRoom"
+        android:title="@string/itemAccount"/>
+    <item
+        android:id="@+id/cmdBack"
+        android:icon="@drawable/undo"
+        android:orderInCategory="100"
+        android:showAsAction="ifRoom"
+        android:title="@string/itemBack"/>
+    <item
+        android:id="@+id/cmdExit"
+        android:icon="@drawable/back"
+        android:orderInCategory="100"
+        android:showAsAction="ifRoom"
+        android:title="@string/itemExit"/>
+
+</menu>
