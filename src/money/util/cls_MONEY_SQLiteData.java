@@ -1,37 +1,61 @@
 package money.util;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+import money.model.cls_MONEY_Account;
+import money.model.cls_MONEY_History;
+import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Log;
-
 
 public class cls_MONEY_SQLiteData {
-	
-	public static final String KEY_ROWID = "_id";
-	public static final String KEY_CODE = "code";
-	public static final String KEY_NAME = "name";
-	public static final String KEY_CONTINENT = "continent";
-	public static final String KEY_REGION = "region";
 
-	private static final String TAG = "CountriesDbAdapter";
+	public static final String KEY_ROWID = "_id";
+	public static final String KEY_CATE = "cate";
+	public static final String KEY_NAME = "name";
+	public static final String KEY_PRICE = "price";
+	public static final String KEY_DESCRIPTION = "description";
+	public static final String KEY_DATEH = "dateh";
+	public static final String KEY_ACCOUNT = "idaccount";
+
 	private DatabaseHelper mDbHelper;
 	private SQLiteDatabase mDb;
 
-	private static final String DATABASE_NAME = "World";
-	private static final String SQLITE_TABLE = "Country";
+	private static final String DATABASE_NAME = "Money";
+	private static final String SQLITE_TABLE_ACCOUNT = "Account";
+	private static final String SQLITE_TABLE_HISTORY = "History";
 	private static final int DATABASE_VERSION = 1;
 
 	private final Context mCtx;
 
-	private static final String DATABASE_CREATE = "CREATE TABLE if not exists "
-			+ SQLITE_TABLE + " (" + KEY_ROWID
-			+ " integer PRIMARY KEY autoincrement," + KEY_CODE + "," + KEY_NAME
-			+ "," + KEY_CONTINENT + "," + KEY_REGION + "," + " UNIQUE ("
-			+ KEY_CODE + "));";
+	private static final String DATABASE_CREATE_HISTORY = "CREATE TABLE if not exists "
+			+ SQLITE_TABLE_HISTORY
+			+ " ("
+			+ KEY_ROWID
+			+ " INTEGER PRIMARY KEY AUTOINCREMENT,"
+			+ KEY_ACCOUNT
+			+ ","
+			+ KEY_DESCRIPTION
+			+ ","
+			+ KEY_DATEH
+			+ ","
+			+ KEY_CATE
+			+ ","
+			+ KEY_PRICE + ", UNIQUE (" + KEY_ROWID + "));";
+
+	private static final String DATABASE_CREATE_ACCOUNT = "CREATE TABLE if not exists "
+			+ SQLITE_TABLE_ACCOUNT
+			+ " ("
+			+ KEY_ROWID
+			+ " INTEGER PRIMARY KEY AUTOINCREMENT,"
+			+ KEY_NAME
+			+ ","
+			+ KEY_PRICE + ", UNIQUE (" + KEY_NAME + "));";
 
 	private static class DatabaseHelper extends SQLiteOpenHelper {
 
@@ -41,15 +65,14 @@ public class cls_MONEY_SQLiteData {
 
 		@Override
 		public void onCreate(SQLiteDatabase db) {
-			Log.w(TAG, DATABASE_CREATE);
-			db.execSQL(DATABASE_CREATE);
+			db.execSQL(DATABASE_CREATE_ACCOUNT);
+			db.execSQL(DATABASE_CREATE_HISTORY);
 		}
 
 		@Override
 		public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-			Log.w(TAG, "Upgrading database from version " + oldVersion + " to "
-					+ newVersion + ", which will destroy all old data");
-			db.execSQL("DROP TABLE IF EXISTS " + SQLITE_TABLE);
+			db.execSQL("DROP TABLE IF EXISTS " + SQLITE_TABLE_ACCOUNT);
+			db.execSQL("DROP TABLE IF EXISTS " + SQLITE_TABLE_HISTORY);
 			onCreate(db);
 		}
 	}
@@ -70,41 +93,105 @@ public class cls_MONEY_SQLiteData {
 		}
 	}
 
-	public long createCountry(String code, String name, String continent,
-			String region) {
+	/**
+	 * Create Data Table Account
+	 * 
+	 * @param iStr_Name
+	 * @param IDob_Price
+	 * @return
+	 */
+	public long fncG_CreateAccount(cls_MONEY_Account iClc_Acount) {
 
 		ContentValues initialValues = new ContentValues();
-		initialValues.put(KEY_CODE, code);
-		initialValues.put(KEY_NAME, name);
-		initialValues.put(KEY_CONTINENT, continent);
-		initialValues.put(KEY_REGION, region);
+		initialValues.put(KEY_NAME, iClc_Acount.getName());
+		if (iClc_Acount.getPrice() > 0) {
+			initialValues.put(KEY_PRICE, iClc_Acount.getPrice());
+		}
 
-		return mDb.insert(SQLITE_TABLE, null, initialValues);
+		return mDb.insert(SQLITE_TABLE_ACCOUNT, null, initialValues);
 	}
 
-	public boolean deleteAllCountries() {
+	/**
+	 * Create Data Table History
+	 * 
+	 * @param iCls_History
+	 * @return
+	 */
+	public long fncG_CreateHostory(cls_MONEY_History iCls_History) {
 
-		int doneDelete = 0;
-		doneDelete = mDb.delete(SQLITE_TABLE, null, null);
-		Log.w(TAG, Integer.toString(doneDelete));
-		return doneDelete > 0;
+		ContentValues initialValues = new ContentValues();
+		initialValues.put(KEY_ACCOUNT, iCls_History.getIdAccount());
+		initialValues.put(KEY_CATE, iCls_History.getCate());
+		initialValues.put(KEY_DESCRIPTION, iCls_History.getDesciption());
+		initialValues.put(KEY_PRICE, iCls_History.getPrice());
+		initialValues.put(KEY_DATEH,
+				fncG_FormatDate(iCls_History.getDateHistory()));
+
+		return mDb.insert(SQLITE_TABLE_HISTORY, null, initialValues);
+	}
+
+	/**
+	 * Format Date
+	 * 
+	 * @param iStrDate
+	 * @return
+	 */
+	@SuppressLint("SimpleDateFormat")
+	public String fncG_FormatDate(Date iStrDate) {
+		SimpleDateFormat wDt_Df = new SimpleDateFormat("dd/MM/yyyy");
+		return wDt_Df.format(iStrDate);
+	}
+
+	/**
+	 * Delete One History
+	 * 
+	 * @param iInt_Id
+	 * @return
+	 */
+	public boolean fncG_DeleteHistory(int iInt_Id) {
+		int wCk_Delete = 0;
+		wCk_Delete = mDb.delete(SQLITE_TABLE_HISTORY, KEY_ROWID + " = "
+				+ iInt_Id, null);
+		return wCk_Delete > 0;
+	}
+
+	/**
+	 * Delete All History
+	 * 
+	 * @return
+	 */
+	public boolean fncG_DeleteAllHisroty() {
+		int wCk_Delete = 0;
+		wCk_Delete = mDb.delete(SQLITE_TABLE_HISTORY, null, null);
+		return wCk_Delete > 0;
+	}
+
+	/**
+	 * Delete One Account
+	 * 
+	 * @param iInt_Id
+	 * @return
+	 */
+	public boolean fncG_DeleteAccount(int iInt_Id) {
+
+		int wCk_Delete = 0;
+		wCk_Delete = mDb.delete(SQLITE_TABLE_ACCOUNT, KEY_ROWID + " = "
+				+ iInt_Id, null);
+		return wCk_Delete > 0;
 
 	}
 
-	public Cursor fetchCountriesByName(String inputText) throws SQLException {
-		Log.w(TAG, inputText);
+	/**
+	 * Function Get All Account
+	 * 
+	 * @return
+	 * @throws SQLException
+	 */
+	public Cursor fncG_GetAllAccount() throws SQLException {
 		Cursor mCursor = null;
-		if (inputText == null || inputText.length() == 0) {
-			mCursor = mDb.query(SQLITE_TABLE, new String[] { KEY_ROWID,
-					KEY_CODE, KEY_NAME, KEY_CONTINENT, KEY_REGION }, null,
-					null, null, null, null);
-
-		} else {
-			mCursor = mDb.query(true, SQLITE_TABLE, new String[] { KEY_ROWID,
-					KEY_CODE, KEY_NAME, KEY_CONTINENT, KEY_REGION }, KEY_NAME
-					+ " like '%" + inputText + "%'", null, null, null, null,
-					null);
-		}
+		mCursor = mDb.query(true, SQLITE_TABLE_ACCOUNT, new String[] {
+				KEY_ROWID, KEY_NAME, KEY_PRICE }, null, null, null, null, null,
+				null);
 		if (mCursor != null) {
 			mCursor.moveToFirst();
 		}
@@ -112,11 +199,34 @@ public class cls_MONEY_SQLiteData {
 
 	}
 
-	public Cursor fetchAllCountries() {
+	/**
+	 * Get All Account To Spending
+	 * 
+	 * @return
+	 * @throws SQLException
+	 */
+	public Cursor fncG_GetAccountSpending() throws SQLException {
+		Cursor mCursor = null;
+		mCursor = mDb.query(true, SQLITE_TABLE_ACCOUNT, new String[] {
+				KEY_ROWID, KEY_NAME, KEY_PRICE }, KEY_PRICE + " > 0 ", null,
+				null, null, null, null);
+		if (mCursor != null) {
+			mCursor.moveToFirst();
+		}
+		return mCursor;
 
-		Cursor mCursor = mDb.query(SQLITE_TABLE, new String[] { KEY_ROWID,
-				KEY_CODE, KEY_NAME, KEY_CONTINENT, KEY_REGION }, null, null,
-				null, null, null);
+	}
+
+	/**
+	 * Get All Date In History
+	 * 
+	 * @return
+	 */
+	public Cursor fncG_GetAllHistory_Date() {
+
+		Cursor mCursor = mDb.query(SQLITE_TABLE_HISTORY,
+				new String[] { KEY_DATEH }, null, null, null, null, KEY_DATEH
+						+ " desc");
 
 		if (mCursor != null) {
 			mCursor.moveToFirst();
@@ -124,15 +234,65 @@ public class cls_MONEY_SQLiteData {
 		return mCursor;
 	}
 
-	public void insertSomeCountries() {
+	/**
+	 * Get All In History
+	 * 
+	 * @return
+	 */
+	public Cursor fncG_GetAllHistory_ByDate(Date iDt_Date) {
 
-		createCountry("AFG", "Afghanistan", "Asia", "Southern and Central Asia");
-		createCountry("ALB", "Albania", "Europe", "Southern Europe");
-		createCountry("DZA", "Algeria", "Africa", "Northern Africa");
-		createCountry("ASM", "American Samoa", "Oceania", "Polynesia");
-		createCountry("AND", "Andorra", "Europe", "Southern Europe");
-		createCountry("AGO", "Angola", "Africa", "Central Africa");
-		createCountry("AIA", "Anguilla", "North America", "Caribbean");
+		Cursor mCursor = mDb.query(SQLITE_TABLE_HISTORY, new String[] {
+				KEY_ROWID, KEY_ACCOUNT, KEY_CATE, KEY_PRICE, KEY_DATEH,
+				KEY_DESCRIPTION }, KEY_DATEH + " = " + iDt_Date, null, null,
+				null, null);
 
+		if (mCursor != null) {
+			mCursor.moveToFirst();
+		}
+		return mCursor;
+	}
+
+	/**
+	 * Get All In History
+	 * 
+	 * @return
+	 */
+	public Cursor fncG_GetAllHistory() {
+
+		Cursor mCursor = mDb.query(SQLITE_TABLE_HISTORY, new String[] {
+				KEY_ROWID, KEY_ACCOUNT, KEY_CATE, KEY_PRICE, KEY_DATEH,
+				KEY_DESCRIPTION }, null, null, null, null, null);
+
+		if (mCursor != null) {
+			mCursor.moveToFirst();
+		}
+		return mCursor;
+	}
+
+	public void InsertSomeAccount() {
+
+		cls_MONEY_Account iClc_Acount1 = new cls_MONEY_Account("ATM", 5000000);
+		cls_MONEY_Account iClc_Acount2 = new cls_MONEY_Account("BAG", 5000000);
+		cls_MONEY_Account iClc_Acount3 = new cls_MONEY_Account("BANK", 5000000);
+		fncG_CreateAccount(iClc_Acount1);
+		fncG_CreateAccount(iClc_Acount2);
+		fncG_CreateAccount(iClc_Acount3);
+
+	}
+
+	public void InsertSomeHistory() {
+		Date i = new Date();
+		cls_MONEY_History iH1 = new cls_MONEY_History(1, 0, 200000,
+				"Play Game", i);
+		fncG_CreateHostory(iH1);
+		cls_MONEY_History iH2 = new cls_MONEY_History(1, 1, 200000, "Bank", i);
+		fncG_CreateHostory(iH2);
+		cls_MONEY_History iH3 = new cls_MONEY_History(1, 0, 400000, "Bank", i);
+		fncG_CreateHostory(iH3);
+		cls_MONEY_History iH4 = new cls_MONEY_History(1, 1, 300000, "BirthDay",
+				i);
+		fncG_CreateHostory(iH4);
+		cls_MONEY_History iH5 = new cls_MONEY_History(1, 0, 300000, "Bank", i);
+		fncG_CreateHostory(iH5);
 	}
 }
