@@ -24,5 +24,6 @@
     <string name="itemBack">Back</string>
     <string name="itemExit">Exit</string>
     <string name="itemReport">Report</string>
+    <string name="imgKey">Key</string>
 
 </resources>

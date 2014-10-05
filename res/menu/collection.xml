@@ -2,17 +2,17 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
 
     <item
-        android:id="@+id/cmdCollection"
-        android:icon="@drawable/collection"
-        android:orderInCategory="100"
-        android:showAsAction="ifRoom"
-        android:title="@string/itemSpending"/>
-    <item
         android:id="@+id/cmdSpeding"
         android:icon="@drawable/spending"
         android:orderInCategory="100"
         android:showAsAction="ifRoom"
         android:title="@string/itemCollection"/>
+    <item
+        android:id="@+id/cmdHistory"
+        android:icon="@drawable/history"
+        android:orderInCategory="100"
+        android:showAsAction="ifRoom"
+        android:title="@string/itemHistory"/>
     <item
         android:id="@+id/cmdReport"
         android:icon="@drawable/report"

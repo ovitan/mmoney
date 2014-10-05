@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 public class cls_MONEY_AccountActivity extends Activity {
 
@@ -21,7 +22,10 @@ public class cls_MONEY_AccountActivity extends Activity {
 
 		return true;
 	}
-
+	public void fncG_OpenActivity(View view) {
+		Intent intent = new Intent(this, cls_MOENY_AccountList.class);
+		startActivity(intent);
+	}
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {

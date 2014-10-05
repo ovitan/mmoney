@@ -59,33 +59,35 @@
                 android:ems="10"
                 android:inputType="number"
                 android:maxLength="11" />
-        </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:gravity="center_horizontal"
-            android:orientation="horizontal" >
-
-            <Button
-                android:id="@+id/cmdbtnSave"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/accountbutton"
-                android:drawableLeft="@drawable/ic_action_save"
-                android:text="@string/cmdSave"
-                android:textColor="#ffffff" />
+                android:layout_marginTop="20dp"
+                android:gravity="center_horizontal"
+                android:orientation="horizontal" >
 
-            <Button
-                android:id="@+id/cmbtnlist"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:background="@drawable/accountbutton_list"
-                android:drawableLeft="@drawable/ic_action_view_as_list"
-                android:text="@string/cmdList"
-                android:textColor="#ffffff" />
+                <Button
+                    android:id="@+id/cmdbtnSave"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/accountbutton"
+                    android:drawableLeft="@drawable/ic_action_save"
+                    android:text="@string/cmdSave"
+                    android:textColor="#ffffff" />
+
+                <Button
+                    android:id="@+id/cmbtnlist"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:background="@drawable/accountbutton_list"
+                    android:drawableLeft="@drawable/ic_action_view_as_list"
+                    android:onClick="fncG_OpenActivity"
+                    android:text="@string/cmdList"
+                    android:layout_marginBottom="45dp"
+                    android:textColor="#ffffff" />
+            </LinearLayout>
         </LinearLayout>
     </LinearLayout>
 

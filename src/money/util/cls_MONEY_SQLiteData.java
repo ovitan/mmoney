@@ -269,6 +269,26 @@ public class cls_MONEY_SQLiteData {
 		return mCursor;
 	}
 
+	/**
+	 * Get All In History
+	 * 
+	 * @return
+	 */
+	public Cursor fncG_GetQueyAllHistory() {
+
+		String sql = "SELECT History._id,Account .name,History.description,History.price,History.dateh, "
+				+ " case History.cate when 0 then 'Spending' when "
+				+ " 1 then 'Collecting' end as 'cate' FROM History,Account "
+				+ " Where History.idaccount = Account ._id order by dateh desc";
+
+		Cursor mCursor = mDb.rawQuery(sql, null);
+
+		if (mCursor != null) {
+			mCursor.moveToFirst();
+		}
+		return mCursor;
+	}
+
 	public void InsertSomeAccount() {
 
 		cls_MONEY_Account iClc_Acount1 = new cls_MONEY_Account("ATM", 5000000);

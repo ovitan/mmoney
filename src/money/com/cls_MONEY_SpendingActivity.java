@@ -33,10 +33,7 @@ public class cls_MONEY_SpendingActivity extends Activity {
 		addListenerOnButton();
 	}
 
-	public void openSecondActivity(View view) {
-		Intent intent = new Intent(this, cls_MONEY_CollectionActivity.class);
-		startActivity(intent);
-	}
+
 
 	public void setCurrentDateOnView() {
 

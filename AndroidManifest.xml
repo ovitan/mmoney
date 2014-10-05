@@ -27,20 +27,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <!--
-             <activity
-            android:name=".cls_MONEY_CollectionActivity"
-            android:label="@string/app_collectmoney"
-            android:uiOptions="splitActionBarWhenNarrow" >
-            <meta-data
-                android:name="android.support.UI_OPTIONS"
-                android:value="splitActionBarWhenNarrow" />
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="money.com.cls_MONEY_SpendingActivity" />
-        </activity>
-        -->
-
         <activity
             android:name=".cls_MONEY_CollectionActivity"
             android:label="@string/app_collectmoney"
@@ -69,8 +55,24 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        
-                <activity
+        <activity
+            android:name=".cls_MOENY_AccountList"
+            android:label="@string/app_accounttmoney"
+            android:uiOptions="splitActionBarWhenNarrow" >
+            <meta-data
+                android:name="android.support.UI_OPTIONS"
+                android:value="splitActionBarWhenNarrow" />
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="money.com.cls_MONEY_AccountActivity" />
+
+            <intent-filter>
+                <action android:name="money.com.cls_MOENY_AccountList.CATEGORY" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
             android:name=".cls_MONEY_HistoryActivity"
             android:label="@string/app_historymoney"
             android:uiOptions="splitActionBarWhenNarrow" >

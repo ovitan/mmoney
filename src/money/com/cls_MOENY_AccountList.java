@@ -7,49 +7,41 @@ import android.app.Activity;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.support.v4.app.NavUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
-//import android.widget.Toast;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.TextView;
+import android.widget.Toast;
 
-public class cls_MONEY_HistoryActivity extends Activity {
+public class cls_MOENY_AccountList extends Activity {
 	private cls_MONEY_SQLiteData dbHelper;
 	private SimpleCursorAdapter dataAdapter;
 
 	@Override
-	public void onCreate(Bundle savedInstanceState) {
+	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_history);
-
+		setContentView(R.layout.activity_account_list);
+		getActionBar().setDisplayHomeAsUpEnabled(true);
 		dbHelper = new cls_MONEY_SQLiteData(this);
 		dbHelper.open();
-
-		// dbHelper.InsertSomeAccount();
-		// dbHelper.fncG_DeleteAllHisroty();
-		// dbHelper.InsertSomeHistory();
-
 		fncG_DisPlayView();
-
 	}
 
 	private void fncG_DisPlayView() {
 
-		Cursor cursor = dbHelper.fncG_GetQueyAllHistory();
+		Cursor cursor = dbHelper.fncG_GetAllAccount();
 
 		String[] columns = new String[] { cls_MONEY_SQLiteData.KEY_NAME,
-				cls_MONEY_SQLiteData.KEY_DESCRIPTION,
-				cls_MONEY_SQLiteData.KEY_PRICE, cls_MONEY_SQLiteData.KEY_DATEH,
-				cls_MONEY_SQLiteData.KEY_CATE };
+				cls_MONEY_SQLiteData.KEY_PRICE };
 
-		int[] to = new int[] { R.id.name, R.id.description, R.id.price,
-				R.id.date, R.id.cate };
+		int[] to = new int[] { R.id.name, R.id.price };
 
-		dataAdapter = new SimpleCursorAdapter(this, R.layout.list_history,
+		dataAdapter = new SimpleCursorAdapter(this, R.layout.list_account,
 				cursor, columns, to, 0);
 		dataAdapter.setViewBinder(new SimpleCursorAdapter.ViewBinder() {
 			public boolean setViewValue(View view, Cursor cursor,
@@ -72,12 +64,12 @@ public class cls_MONEY_HistoryActivity extends Activity {
 			public void onItemClick(AdapterView<?> listView, View view,
 					int position, long id) {
 
-//				Cursor cursor = (Cursor) listView.getItemAtPosition(position);
-//
-//				String countryCode = cursor.getString(cursor
-//						.getColumnIndexOrThrow("_id"));
-//				Toast.makeText(getApplicationContext(), countryCode,
-//						Toast.LENGTH_SHORT).show();
+				Cursor cursor = (Cursor) listView.getItemAtPosition(position);
+
+				String countryCode = cursor.getString(cursor
+						.getColumnIndexOrThrow("_id"));
+				Toast.makeText(getApplicationContext(), countryCode,
+						Toast.LENGTH_SHORT).show();
 
 			}
 		});
@@ -87,7 +79,7 @@ public class cls_MONEY_HistoryActivity extends Activity {
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 
-		getMenuInflater().inflate(R.menu.history, menu);
+		getMenuInflater().inflate(R.menu.account, menu);
 
 		return true;
 	}
@@ -95,33 +87,40 @@ public class cls_MONEY_HistoryActivity extends Activity {
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
+		case android.R.id.home:
+			NavUtils.navigateUpFromSameTask(this);
+			return true;
 		case R.id.cmdSpeding:
 			Intent intent = new Intent(this, cls_MONEY_SpendingActivity.class);
 			startActivity(intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP
 					| Intent.FLAG_ACTIVITY_SINGLE_TOP));
 			return true;
-		case R.id.cmdCollection:
+		case R.id.cmdHistory:
 			Intent wIn_IntentH = new Intent(
-					"money.com.cls_MONEY_CollectionActivity.CATEGORY");
+					"money.com.cls_MONEY_HistoryActivity.CATEGORY");
 			startActivity(wIn_IntentH);
 			finish();
 			return true;
 		case R.id.cmdReport:
+
 			return true;
-		case R.id.cmdAccount:
+		case R.id.cmdCollection:
 			Intent wIn_Intent = new Intent(
-					"money.com.cls_MONEY_AccountActivity.CATEGORY");
+					"money.com.cls_MONEY_CollectionActivity.CATEGORY");
 			startActivity(wIn_Intent);
 			finish();
 			return true;
 		case R.id.cmdBack:
+
 			return true;
 		case R.id.cmdExit:
+
 			return true;
 		}
 
 		return super.onOptionsItemSelected(item);
 	}
+
 	/**
 	 * Format String form Double
 	 * 

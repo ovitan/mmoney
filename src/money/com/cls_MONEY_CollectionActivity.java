@@ -30,13 +30,13 @@ public class cls_MONEY_CollectionActivity extends Activity {
 		setContentView(R.layout.activity_spending);
 		setCurrentDateOnView();
 		addListenerOnButton();
-		// getActionBar().setDisplayHomeAsUpEnabled(true);
+		
 	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 
-		getMenuInflater().inflate(R.menu.history, menu);
+		getMenuInflater().inflate(R.menu.collection, menu);
 
 		return true;
 	}
@@ -44,9 +44,6 @@ public class cls_MONEY_CollectionActivity extends Activity {
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
-		// case android.R.id.home:
-		// //NavUtils.navigateUpFromSameTask(this);
-		// return true;
 		case R.id.cmdSpeding:
 			Intent intent = new Intent(this, cls_MONEY_SpendingActivity.class);
 			startActivity(intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP
