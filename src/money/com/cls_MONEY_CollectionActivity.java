@@ -56,7 +56,10 @@ public class cls_MONEY_CollectionActivity extends Activity {
 			finish();
 			return true;
 		case R.id.cmdReport:
-			// NavUtils.navigateUpFromSameTask(this);
+			Intent wIn_IntentR = new Intent(
+					"money.com.cls_MONEY_ReportActivity.CATEGORY");
+			startActivity(wIn_IntentR);
+			finish();
 			return true;
 		case R.id.cmdAccount:
 			Intent wIn_Intent = new Intent("money.com.cls_MONEY_AccountActivity.CATEGORY");
@@ -111,7 +114,7 @@ public class cls_MONEY_CollectionActivity extends Activity {
 
 	public void setCurrentDateOnView() {
 
-		tvDisplayDate = (TextView) findViewById(R.id.editText3);
+		tvDisplayDate = (TextView) findViewById(R.id.txtDate);
 
 		final Calendar c = Calendar.getInstance();
 		year = c.get(Calendar.YEAR);

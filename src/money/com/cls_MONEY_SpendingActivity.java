@@ -33,11 +33,9 @@ public class cls_MONEY_SpendingActivity extends Activity {
 		addListenerOnButton();
 	}
 
-
-
 	public void setCurrentDateOnView() {
 
-		tvDisplayDate = (TextView) findViewById(R.id.editText3);
+		tvDisplayDate = (TextView) findViewById(R.id.txtDate);
 
 		final Calendar c = Calendar.getInstance();
 		year = c.get(Calendar.YEAR);
@@ -101,7 +99,8 @@ public class cls_MONEY_SpendingActivity extends Activity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		int id = item.getItemId();
 		if (id == R.id.cmdCollection) {
-			Intent wIn_Intent = new Intent("money.com.cls_MONEY_CollectionActivity.CATEGORY");
+			Intent wIn_Intent = new Intent(
+					"money.com.cls_MONEY_CollectionActivity.CATEGORY");
 			startActivity(wIn_Intent);
 			finish();
 		}
@@ -113,10 +112,15 @@ public class cls_MONEY_SpendingActivity extends Activity {
 			return true;
 		}
 		if (id == R.id.cmdReport) {
+			Intent wIn_IntentR = new Intent(
+					"money.com.cls_MONEY_ReportActivity.CATEGORY");
+			startActivity(wIn_IntentR);
+			finish();
 			return true;
 		}
 		if (id == R.id.cmdAccount) {
-			Intent wIn_Intent = new Intent("money.com.cls_MONEY_AccountActivity.CATEGORY");
+			Intent wIn_Intent = new Intent(
+					"money.com.cls_MONEY_AccountActivity.CATEGORY");
 			startActivity(wIn_Intent);
 			finish();
 			return true;

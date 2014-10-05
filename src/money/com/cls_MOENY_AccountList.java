@@ -70,10 +70,8 @@ public class cls_MOENY_AccountList extends Activity {
 						.getColumnIndexOrThrow("_id"));
 				Toast.makeText(getApplicationContext(), countryCode,
 						Toast.LENGTH_SHORT).show();
-
 			}
 		});
-
 	}
 
 	@Override
@@ -102,7 +100,10 @@ public class cls_MOENY_AccountList extends Activity {
 			finish();
 			return true;
 		case R.id.cmdReport:
-
+			Intent wIn_IntentR = new Intent(
+					"money.com.cls_MONEY_ReportActivity.CATEGORY");
+			startActivity(wIn_IntentR);
+			finish();
 			return true;
 		case R.id.cmdCollection:
 			Intent wIn_Intent = new Intent(

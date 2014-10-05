@@ -25,5 +25,9 @@
     <string name="itemExit">Exit</string>
     <string name="itemReport">Report</string>
     <string name="imgKey">Key</string>
-
+    <string name="lblrpttoday">Report Money Today</string>
+    <string name="lblrptweek">Report Money Day Of Month</string>
+    <string name="lblrptmonth">Report Money Month Of Year</string>
+	<string name="lblday">Day</string>
+	<string name="lblmonth">Month</string>
 </resources>

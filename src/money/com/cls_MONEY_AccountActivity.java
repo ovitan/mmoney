@@ -42,7 +42,10 @@ public class cls_MONEY_AccountActivity extends Activity {
 			finish();
 			return true;
 		case R.id.cmdReport:
-
+			Intent wIn_IntentR = new Intent(
+					"money.com.cls_MONEY_ReportActivity.CATEGORY");
+			startActivity(wIn_IntentR);
+			finish();
 			return true;
 		case R.id.cmdCollection:
 			Intent wIn_Intent = new Intent(

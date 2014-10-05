@@ -107,6 +107,10 @@ public class cls_MONEY_HistoryActivity extends Activity {
 			finish();
 			return true;
 		case R.id.cmdReport:
+			Intent wIn_IntentR = new Intent(
+					"money.com.cls_MONEY_ReportActivity.CATEGORY");
+			startActivity(wIn_IntentR);
+			finish();
 			return true;
 		case R.id.cmdAccount:
 			Intent wIn_Intent = new Intent(
